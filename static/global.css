@@ -4,11 +4,6 @@ body {
     font-size: 14px;
     line-height: 1.5;
     color: #333;
-    position: relative;
-    max-width: 48em;
-    padding: 2em;
-    margin: 0 auto;
-    box-sizing: border-box;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -54,6 +49,29 @@ img {
     display: block;
     max-width: 100%;
     height: auto;
+}
+
+.container {
+    position: relative;
+    max-width: 48em;
+    padding: 2em;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.quote {
+  background: #f9f9f9;
+  padding: 2em;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+.quote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
 }
 
 .footer {

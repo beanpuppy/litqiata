@@ -70,7 +70,7 @@ impl Renderable<App> for App {
                     <a href="https://blog.justinduch.com" target="_blank">{ "https://blog.justinduch.com" }</a>
                     { " using /api/quote." }
                 </small>
-                <p>{ self.view_quote() }</p>
+                <p class="quote">{ self.view_quote() }</p>
                 <div class="footer">
                     <button onclick=|_| Msg::Quote>{ "Refresh" }</button>
                     <small>
@@ -86,21 +86,32 @@ impl Renderable<App> for App {
 
 impl App {
     fn view_quote(&self) -> Html<App> {
-        let quote = self.quote.as_ref();
-
-        match quote {
-            Some(_) => {
-                let tag = js! {
-                    var div = document.createElement("div");
-                    div.innerHTML = @{&self.quote.as_ref().unwrap().quote};
-                    return div;
-                };
-
-                let node = Node::try_from(tag).expect("convert tag");
-
-                html! { VNode::VRef(node) }
+        match self.quote.as_ref() {
+            Some(quote) => {
+                html! {
+                    <>
+                        <small>
+                            <a href={ format!("{}{}", "https://blog.justinduch.com/article/", &quote.post) } target="_blank">
+                                { &quote.title }
+                            </a>
+                        </small>
+                        { self.quote_string(&quote.quote) }
+                    </>
+                }
             },
-            None => html! { <p>{ "Loading..." }</p> }
+            None => html! { <p class="loading">{ "Loading..." }</p> }
         }
+    }
+
+    fn quote_string(&self, quote: &str) -> Html<App> {
+        let tag = js! {
+            var div = document.createElement("div");
+            div.innerHTML = @{quote};
+            return div;
+        };
+
+        let node = Node::try_from(tag).expect("convert tag");
+
+        html! { VNode::VRef(node) }
     }
 }

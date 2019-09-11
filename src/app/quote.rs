@@ -6,6 +6,8 @@ use yew::services::fetch::{FetchService, FetchTask, Request, Response};
 
 #[derive(Serialize, Deserialize)]
 pub struct Quote{
+    pub title: String,
+    pub post: String,
     pub quote: String,
 }
 
