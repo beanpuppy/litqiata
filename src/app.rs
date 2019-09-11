@@ -1,6 +1,7 @@
 mod quote;
 use quote::{QuoteService, Quote};
 
+use log::*;
 use failure::Error;
 
 use stdweb::js;
@@ -53,7 +54,7 @@ impl Component for App {
                 self.task = Some(task);
             }
             Msg::QuoteReady(Ok(quote)) => self.quote = Some(quote),
-            Msg::QuoteReady(Err(_)) => { /* Can't load quote */ }
+            Msg::QuoteReady(Err(_)) => info!("Can't load quote")
         }
         true
     }
@@ -69,9 +70,9 @@ impl Renderable<App> for App {
                     <a href="https://blog.justinduch.com" target="_blank">{ "https://blog.justinduch.com" }</a>
                     { " using /api/quote." }
                 </small>
-                <p class="quote">{ self.view_quote() }</p>
+                <div class="quote">{ self.view_quote() }</div>
                 <div class="footer">
-                    <button onclick=|_| Msg::Quote>{ "Refresh" }</button>
+                    <button onclick=|_| Msg::Quote>{ "refresh" }</button>
                     <small>
                         <a href="https://github.com/beanpuppy/litqiata" target="_blank">
                             { "view the source code" }
@@ -86,19 +87,22 @@ impl Renderable<App> for App {
 impl App {
     fn view_quote(&self) -> Html<App> {
         match self.quote.as_ref() {
-            Some(quote) => {
-                html! {
-                    <>
-                        <small>
-                            <a href={ format!("{}{}", "https://blog.justinduch.com/article/", &quote.post) } target="_blank">
-                                { &quote.title }
-                            </a>
-                        </small>
-                        { self.quote_string(&quote.quote) }
-                    </>
-                }
+            Some(quote) => html! {
+                <>
+                    <small>
+                        <a href={ format!("{}{}", "https://blog.justinduch.com/article/", &quote.post) } target="_blank">
+                            { &quote.title }
+                        </a>
+                    </small>
+                    { self.quote_string(&quote.quote) }
+                </>
             },
-            None => html! { <p class="loading">{ "Loading..." }</p> }
+            None => html! {
+                <div class="spinner">
+                    <div class="cube1"></div>
+                    <div class="cube2"></div>
+                </div>
+            }
         }
     }
 
