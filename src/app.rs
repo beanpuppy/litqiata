@@ -24,7 +24,6 @@ pub enum Msg {
     QuoteReady(Result<Quote, Error>),
 }
 
-
 impl Component for App {
     type Message = Msg;
     type Properties = ();
