@@ -109,6 +109,7 @@ impl App {
     fn quote_string(&self, quote: &str) -> Html<App> {
         let tag = js! {
             var div = document.createElement("div");
+            div.className += "quote-string";
             div.innerHTML = @{quote};
             return div;
         };
