@@ -1,16 +1,16 @@
 mod quote;
-use quote::{QuoteService, Quote};
+use quote::{Quote, QuoteService};
 
-use log::*;
 use failure::Error;
+use log::*;
 
 use stdweb::js;
 use stdweb::unstable::TryFrom;
 use stdweb::web::Node;
 
-use yew::virtual_dom::VNode;
 use yew::callback::Callback;
 use yew::services::fetch::FetchTask;
+use yew::virtual_dom::VNode;
 use yew::{html, Component, ComponentLink, Html, Renderable, ShouldRender};
 
 pub struct App {
@@ -47,14 +47,12 @@ impl Component for App {
             Msg::Quote => {
                 self.quote = None;
 
-                let task = self
-                    .quote_service
-                    .get(self.callback.clone());
+                let task = self.quote_service.get(self.callback.clone());
 
                 self.task = Some(task);
             }
             Msg::QuoteReady(Ok(quote)) => self.quote = Some(quote),
-            Msg::QuoteReady(Err(_)) => info!("Can't load quote")
+            Msg::QuoteReady(Err(_)) => info!("Can't load quote"),
         }
         true
     }
@@ -70,15 +68,15 @@ impl Renderable<App> for App {
                     <a href="https://blog.justinduch.com" target="_blank">{ "https://blog.justinduch.com" }</a>
                     { " using /api/quote." }
                 </small>
-                <div class="quote">{ self.view_quote() }</div>
                 <div class="footer">
-                    <button onclick=|_| Msg::Quote>{ "refresh" }</button>
+                    <small><a href="#" onclick=|_| Msg::Quote>{ "refresh" }</a></small>
                     <small>
                         <a href="https://github.com/beanpuppy/litqiata" target="_blank">
                             { "view the source code" }
                         </a>
                     </small>
                 </div>
+                <div class="quote">{ self.view_quote() }</div>
             </div>
         }
     }
@@ -102,7 +100,7 @@ impl App {
                     <div class="cube1"></div>
                     <div class="cube2"></div>
                 </div>
-            }
+            },
         }
     }
 
