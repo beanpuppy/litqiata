@@ -6,14 +6,14 @@ Gets a random quote from [blog.justinduch.com][].
 
 ## 🚴 Usage
 
-### 🛠️ Build with `yarn run build`
+### 🛠️ Build with `yarn build`
 
 ```
-yarn run build
+yarn build
 ```
 
-### 🔬 Serve locally with `yarn run start:dev`
+### 🔬 Serve locally with `yarn start:dev`
 
 ```
-yarn run start:dev
+yarn start:dev
 ```
